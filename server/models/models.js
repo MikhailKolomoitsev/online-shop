@@ -1,22 +1,22 @@
-const sequalize=require('../db')
-const { DataTypes } = require('sequalize')
+const sequelize = require('../db')
+const { DataTypes } = require('sequelize')
 
-const User = sequalize.define('user', {
+const User = sequelize.define('user', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    email: {type: DataTypes.STRING, unique: true},
-    email: {type: DataTypes.STRING},
-    role: {type: DataTypes.STRING, defaultValue: "User"},
+    email: { type: DataTypes.STRING, unique: true, },
+    password: { type: DataTypes.STRING },
+    role: { type: DataTypes.STRING, defaultValue: "USER" },
 })
 
-const Basket = sequalize.define('basket', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-})
-
-const BasketDevice = sequalize.define('basket_device', {
+const Basket = sequelize.define('basket', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })
 
-const Device = sequalize.define('device', {
+const BasketDevice = sequelize.define('basket_device', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+})
+
+const Device = sequelize.define('device', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
     price: { type: DataTypes.INTEGER, allowNull: false },
@@ -49,6 +49,7 @@ const TypeBrand = sequelize.define('type_brand', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })
 
+
 User.hasOne(Basket)
 Basket.belongsTo(User)
 
@@ -72,3 +73,18 @@ BasketDevice.belongsTo(Device)
 
 Device.hasMany(DeviceInfo, { as: 'info' });
 DeviceInfo.belongsTo(Device)
+
+Type.belongsToMany(Brand, { through: TypeBrand })
+Brand.belongsToMany(Type, { through: TypeBrand })
+
+module.exports = {
+    User,
+    Basket,
+    BasketDevice,
+    Device,
+    Type,
+    Brand,
+    Rating,
+    TypeBrand,
+    DeviceInfo
+}
