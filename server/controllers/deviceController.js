@@ -14,7 +14,11 @@ class DeviceController {
             if (info) {
                 info = JSON.parse(info)
                 info.forEach(i => {
-                    
+                    DeviceInfo.create({
+                        title: i.title,
+                        description: i.description,
+                        deviceId: device.id
+                    })
                 });
             }
 
@@ -50,8 +54,13 @@ class DeviceController {
     }
 
 
-    getById(req, res) {
-
+    async getById(req, res) {
+        const { id } = req.params
+        const device = await Device.findOne({
+            where: { id },
+            include: [{ model: DeviceInfo, as: 'info' }]
+        })
+        return res.json(device)
     }
 }
 
