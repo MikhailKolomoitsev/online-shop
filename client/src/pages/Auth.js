@@ -2,8 +2,8 @@ import React from "react";
 
 const Auth = () => {
     return (
-        <div></div>
+        <div>Auth</div>
     )
 }
 
-export default Shop
+export default Auth

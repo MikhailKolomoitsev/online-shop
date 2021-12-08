@@ -2,7 +2,7 @@ import React from "react";
 
 const Device = () => {
     return (
-        <div></div>
+        <div>DEVICE</div>
     )
 }
 
