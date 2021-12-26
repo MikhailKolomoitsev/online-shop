@@ -1,23 +1,43 @@
 import React from 'react'
-import { Container, Form, Card } from 'react-bootstrap'
+import { Container, Form, Card, Button, Row } from 'react-bootstrap'
+import { NavLink, useLocation } from 'react-router-dom'
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/constants";
 
 const Auth = () => {
+    const location = useLocation()
+    const isLogin = location.pathname === LOGIN_ROUTE
+    console.log(location)
     return (
         <Container
             className="d-flex justify-content-center align-items-center"
             style={{ height: window.innerHeight - 54 }}
         >
             <Card style={{ width: 600 }} className='p-5'>
-                <h2 className='m-auto'>Authorization form</h2>
+                <h2 className='m-auto'>{isLogin ? " Authorization form" : "Registration form"}</h2>
                 <Form className="d-flex flex-column">
                     <Form.Control
-                        className='mt-2'
+                        className='mt-3'
                         placeholder='Insert e-mail'
                     />
                     <Form.Control
-                        className='mt-2'
-                        placeholder='Insert e-mail'
+                        className='mt-3'
+                        placeholder='Insert password'
                     />
+                    <Row className='d-flex justify-content-between mt-3 pl-3 pr-3'>
+                        {isLogin ? <div>
+                            Do not have account? <NavLink to={REGISTRATION_ROUTE}>Registrate!</NavLink>
+                        </div> :
+                            <div>
+                                Do you have an account? <NavLink to={LOGIN_ROUTE}>Login!</NavLink>
+                            </div>
+                        }
+
+                        <Button
+                            variant={'outline-success'}
+                        >
+                            {isLogin ? 'LogIn' : "Registrate"}
+                        </Button>
+                    </Row>
                 </Form>
             </Card>
 

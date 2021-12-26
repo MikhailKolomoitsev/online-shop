@@ -1,8 +1,11 @@
-import React from "react";
+import React from 'react'//rafce snippet
+import { Container } from 'react-bootstrap'
 
 const Shop = () => {
     return (
-        <div>SHOP</div>
+        <Container>
+
+        </Container>
     )
 }
 
