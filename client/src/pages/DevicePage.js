@@ -9,6 +9,13 @@ const Device = () => {
         price: 25000, raiting: 5,
         img: 'https://visanta.com/56561-pos_thickbox/iphone-12-pro-256gb-grafito.jpg'
     }
+    const description = [
+        {id:1, title:'RAM', description:'5GB'},
+        {id:2, title:'Camera', description:'12Mp'},
+        {id:3, title:'Processor', description:'A10'},
+        {id:4, title:'Cores', description:'4'},
+        {id:5, title:'Battery', description:'2700mAh'},
+    ]
     return (
         <Container className="mt-3">
             <Row>
@@ -25,7 +32,7 @@ const Device = () => {
                                 background: `url(${bigStar}) no-repeat center center`,
                                 width: 250, height: 240,
                                 backgroundSize: "cover",
-                                fintSize: 64
+                                fontSize: 64
                             }}
                         >
                             {device.raiting}
@@ -41,6 +48,14 @@ const Device = () => {
                         <Button variant={"outline-success"}>Add to chart</Button>
                     </Card>
                 </Col>
+            </Row>
+            <Row className="d-flex flex-column m-3" >
+                <h2>Characteristics</h2>
+                {description.map((item, index) =>
+                    <Row key={item.id} style={{background: index%2===0?'lightgrey':'transparent'}}>
+                        {item.title}: {item.description}
+                    </Row>
+                        )}
             </Row>
         </Container>
     )

@@ -16,7 +16,7 @@ const AppRouter = () => {
             )}
             <Redirect to={SHOP_ROUTE} />
         </Switch>
-    )
+    );
 }
 
 export default AppRouter
