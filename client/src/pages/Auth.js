@@ -1,11 +1,37 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { observer } from 'mobx-react-lite'
+import { Context } from "../index";
+import { useState } from 'react';
 import { Container, Form, Card, Button, Row } from 'react-bootstrap'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import { login, registration } from '../http/userAPI';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/constants";
 
-const Auth = () => {
+const Auth = observer(() => {
+    const {user}=useContext(Context)
     const location = useLocation()
+    const history=useHistory()
     const isLogin = location.pathname === LOGIN_ROUTE
+    const [Email, setEmail] = useState('')
+    const [Password, setPassword] = useState('')
+
+    const click = async () => {
+        try {
+            let data
+            if (isLogin) {
+                data = await login(Email, Password)
+            } else {
+                data = await registration(Email, Password)
+            }
+            user.setUser(user)
+            user.setIsAuth(true)
+            history.push(SHOP_ROUTE)
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+       
+    }
+
     return (
         <Container
             className="d-flex justify-content-center align-items-center"
@@ -17,10 +43,15 @@ const Auth = () => {
                     <Form.Control
                         className='mt-3'
                         placeholder='Insert e-mail'
+                        value={Email}
+                        onChange={e=>setEmail(e.target.value)}
                     />
                     <Form.Control
                         className='mt-3'
                         placeholder='Insert password'
+                        value={Password}
+                        onChange={e => setPassword(e.target.value)}
+                        type='password'
                     />
                     <Row className='d-flex justify-content-between mt-3 pl-3 pr-3'>
                         {isLogin ? <div>
@@ -33,6 +64,7 @@ const Auth = () => {
 
                         <Button
                             variant={'outline-success'}
+                            onClick={click}
                         >
                             {isLogin ? 'LogIn' : "Registrate"}
                         </Button>
@@ -42,6 +74,6 @@ const Auth = () => {
 
         </Container>
     )
-}
+})
 
 export default Auth
