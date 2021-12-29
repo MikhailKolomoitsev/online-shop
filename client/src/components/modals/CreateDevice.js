@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react' //rafce
 import { fetchBrands, fetchDevices, fetchTypes } from '../../http/deviceAPI'
 import { useState } from 'react'
 import { useContext } from 'react'
