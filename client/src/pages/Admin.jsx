@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'//rafce
 import { useState } from 'react'
 import { Button, Container } from 'react-bootstrap'
@@ -5,7 +6,7 @@ import CreateBrand from '../components/modals/CreateBrand'
 import CreateDevice from '../components/modals/CreateDevice'
 import CreateType from '../components/modals/CreateType'
 
-const Admin = () => {
+const Admin = observer( () => {
     const [BrandVisible, setBrandVisible] = useState(false)
     const [TypeVisible, setTypeVisible] = useState(false)
     const [DeviceVisible, setDeviceVisible] = useState(false)
@@ -31,6 +32,6 @@ const Admin = () => {
             <CreateDevice show={DeviceVisible} onHide={() => setDeviceVisible(false)}/>
         </Container>
     )
-}
+})
 
 export default Admin

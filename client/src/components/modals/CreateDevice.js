@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react' //rafce
-import { fetchBrands, fetchDevices, fetchTypes } from '../../http/deviceAPI'
+import { createDevice, fetchBrands, fetchDevices, fetchTypes } from '../../http/deviceAPI'
 import { useState } from 'react'
 import { useContext } from 'react'
 import { Modal, Button, Form, Dropdown, Row, Col } from 'react-bootstrap'
@@ -12,16 +12,29 @@ const CreateDevice = observer( ({ show, onHide }) => {
     const [name, setname] = useState('')
     const [price, setprice] = useState(0)
     const [file, setfile] = useState(null)
+    const [info, setInfo] = useState([])
 
-    const [Info, setInfo] = useState([])
     const addInfo = () => {
-        setInfo([...Info, { title: '', description: '', number: Date.now() }])
+        setInfo([...info, { title: '', description: '', number: Date.now() }])
     }
     const deleteInfo = (number) => {
-        setInfo(Info.filter(i => i.number !== number))
+        setInfo(info.filter(i => i.number !== number))
     }
     const selectFile = e => {
         setfile(e.target.files[0])
+    }
+    const changeInfo = (key, value, number) => {
+        setInfo(info.map(i => i.number === number ? { ...i, [key]: value } : i))
+    }
+    const addDevice = () => {
+        const formData = new FormData() //Form data because we upload file
+        formData.append('name', name)
+        formData.append('price', `${price}`)
+        formData.append('img', file)
+        formData.append('brandId', device.selectedBrand.id)
+        formData.append('typeId', device.selectedType.id)
+        formData.append('info', JSON.stringify(info))
+        createDevice(formData).then(data => onHide())
     }
 
     useEffect(() => {
@@ -96,15 +109,19 @@ const CreateDevice = observer( ({ show, onHide }) => {
                     >
                         Add new property
                     </Button>
-                    {Info.map(i =>
+                    {info.map(i =>
                         <Row className='mt-3' key={i.number}>
                             <Col md={4}>
                                 <Form.Control
+                                    value={i.title}
+                                    onChange={(e)=>changeInfo("title", e.target.value, i.number)}
                                     placeholder='Name of the property'
                                 />
                             </Col>
                             <Col md={4}>
                                 <Form.Control
+                                    value={i.description}
+                                    onChange={(e)=>changeInfo("description", e.target.value, i.number)}
                                     placeholder='Desc of the property'
                                 />
                             </Col>
@@ -121,7 +138,7 @@ const CreateDevice = observer( ({ show, onHide }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant='outline-danger' onClick={onHide}>Close</Button>
-                <Button variant='outline-success' onClick={onHide}>Add</Button>
+                <Button variant='outline-success' onClick={addDevice}>Add</Button>
             </Modal.Footer>
         </Modal>
     )
