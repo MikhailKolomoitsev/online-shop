@@ -32,6 +32,7 @@ export default class Device {
         this._selectedType = type
     }
     setSelectedBrand(brand) {
+        this.setPage(1)
         this._selectedBrand = brand
     }
     setPage(page) {

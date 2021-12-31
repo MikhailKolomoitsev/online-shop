@@ -7,6 +7,7 @@ import DeviceItem from './DeviceItem'
 
 const DeviceList = observer(() => {
     const { device } = useContext(Context)
+    console.log(device)
     return (
         <Row className='d-flex'>
             {device._devices.map(device =>

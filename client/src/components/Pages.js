@@ -18,7 +18,7 @@ const Pages = observer(() => {
                 <Pagination.Item
                     key={page}
                     active={device.page === page}
-                    olClick={() => device.setPage(page)}
+                    onClick={() => device.setPage(page)}
                 >
                     {page}
                 </Pagination.Item>)}

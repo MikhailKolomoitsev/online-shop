@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom'
 
 
 const NavBar = observer(() => {
-    const { user } = useContext(Context)
+    const { user, device } = useContext(Context)
     const history = useHistory()
 
     const logOut = () => {
@@ -22,12 +22,21 @@ const NavBar = observer(() => {
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
-                <NavLink to={SHOP_ROUTE} style={{ color: 'white' }}>BuyDevice</NavLink>
+                <NavLink
+                    to={SHOP_ROUTE}
+                    style={{ color: 'white' }}
+                    onClick={() => {
+                        device.setSelectedType({})
+                        device.setSelectedBrand({})
+                    }}
+                >BuyDevice</NavLink>
                 {user.isAuth ?
                     <Nav className="ml-auto" style={{ color: 'white' }}>
                         <Button
                             variant={"outline-light"}
-                            onClick={() => history.push(ADMIN_ROUTE)}
+                            onClick={() => {
+                                history.push(ADMIN_ROUTE)
+                            }}
                         >Admin pannel
                         </Button>
                         <Button
