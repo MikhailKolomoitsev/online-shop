@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import UserStore from './store/UserStore';
-import DeviceStore from './store/DeviceStore';
+import DeviceStore from './store/deviceStore';
 
 export const Context = createContext(null)
 
